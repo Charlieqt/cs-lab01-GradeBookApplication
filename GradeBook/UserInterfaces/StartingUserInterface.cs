@@ -33,15 +33,30 @@ namespace GradeBook.UserInterfaces
 
         public static void CreateCommand(string command)
         {
+
             var parts = command.Split(' ');
-            if (parts.Length != 2)
+            if (parts.Length != 3)
             {
-                Console.WriteLine("Command not valid, Create requires a name.");
+                Console.WriteLine("Command not valid, Create requires a name and type of gradebook.");
                 return;
             }
             var name = parts[1];
-            BaseGradeBook gradeBook = new BaseGradeBook(name);
-            Console.WriteLine("Created gradebook {0}.", name);
+            var type = parts[2];
+            bool isWeighted = bool.Parse(parts[3]);
+            BaseGradeBook gradeBook;
+            switch (type.ToLower())
+            {
+                case "standard":
+                    gradeBook = new StandardGradeBook(name, isWeighted);
+                    break;
+                case "ranked":
+                    gradeBook = new RankedGradeBook(name, isWeighted);
+                    break;
+                default:
+                    Console.WriteLine("{0} is not a supported type of gradebook, please try again", type);
+                    return;
+            }
+            Console.WriteLine("Created gradebook {0} of type {1}.", name, type);
             GradeBookUserInterface.CommandLoop(gradeBook);
         }
 
@@ -65,7 +80,7 @@ namespace GradeBook.UserInterfaces
         public static void HelpCommand()
         {
             Console.WriteLine("Commands:");
-            Console.WriteLine("  create 'Name' 'Type' - Creates a new gradebook where 'Name' is the name of the gradebook and 'Type' is what type of grading it should use.");
+            Console.WriteLine(" Create 'Name' 'Type' - Creates a new gradebook where 'Name' is the name of the gradebook and 'Type' is what type of grading it should use.");
             Console.WriteLine("  list                - Lists all of the gradebooks.");
             Console.WriteLine("  delete 'Name'       - Deletes the gradebook with the given name.");
             Console.WriteLine("  quit                - Quits the program.");
@@ -82,14 +97,15 @@ namespace GradeBook.UserInterfaces
 
             string name = parts[1];
             string type = parts[2].ToLower();
+            bool isWeighted = bool.Parse(parts[3]);
 
             if (type == "standard")
             {
-                return new StandardGradeBook(name);
+                return new StandardGradeBook(name, isWeighted);
             }
             else if (type == "ranked")
             {
-                return new RankedGradeBook(name);
+                return new RankedGradeBook(name, isWeighted);
             }
             else
             {
