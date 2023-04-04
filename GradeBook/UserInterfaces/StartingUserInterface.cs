@@ -64,16 +64,12 @@ namespace GradeBook.UserInterfaces
 
         public static void HelpCommand()
         {
-            Console.WriteLine();
-            Console.WriteLine("GradeBook accepts the following commands:");
-            Console.WriteLine();
-            Console.WriteLine("Create 'Name' - Creates a new gradebook where 'Name' is the name of the gradebook.");
-            Console.WriteLine();
-            Console.WriteLine("Load 'Name' - Loads the gradebook with the provided 'Name'.");
-            Console.WriteLine();
-            Console.WriteLine("Help - Displays all accepted commands.");
-            Console.WriteLine();
-            Console.WriteLine("Quit - Exits the application");
+            Console.WriteLine("Commands:");
+            Console.WriteLine("  create 'Name' 'Type' - Creates a new gradebook where 'Name' is the name of the gradebook and 'Type' is what type of grading it should use.");
+            Console.WriteLine("  list                - Lists all of the gradebooks.");
+            Console.WriteLine("  delete 'Name'       - Deletes the gradebook with the given name.");
+            Console.WriteLine("  quit                - Quits the program.");
+            Console.WriteLine("  help                - Displays this message.");
         }
 
         private static BaseGradeBook CreateCommand(string[] parts)
