@@ -75,5 +75,31 @@ namespace GradeBook.UserInterfaces
             Console.WriteLine();
             Console.WriteLine("Quit - Exits the application");
         }
+
+        private static BaseGradeBook CreateCommand(string[] parts)
+        {
+            if (parts.Length != 3)
+            {
+                Console.WriteLine("Command not valid, Create requires a name and type of gradebook.");
+                return null;
+            }
+
+            string name = parts[1];
+            string type = parts[2].ToLower();
+
+            if (type == "standard")
+            {
+                return new StandardGradeBook(name);
+            }
+            else if (type == "ranked")
+            {
+                return new RankedGradeBook(name);
+            }
+            else
+            {
+                Console.WriteLine($"{type} is not a supported type of gradebook, please try again.");
+                return null;
+            }
+        }
     }
 }
